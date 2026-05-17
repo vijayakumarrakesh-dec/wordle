@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hey Sneha ❤️</title>
+
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg,#ffdde1,#ee9ca7);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+      margin:0;
+    }
+
+    .container{
+      background:white;
+      padding:30px;
+      border-radius:20px;
+      text-align:center;
+      width:350px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    h2{
+      color:#ff4d6d;
+      margin-bottom:10px;
+    }
+
+    h1{
+      color:#ff4d6d;
+      margin-bottom:10px;
+    }
+
+    .hint{
+      font-size:15px;
+      color:#555;
+      margin-bottom:20px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(5, 55px);
+      gap:8px;
+      justify-content:center;
+      margin-bottom:20px;
+    }
+
+    .tile{
+      width:55px;
+      height:55px;
+      border:2px solid #ddd;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      font-weight:bold;
+      text-transform:uppercase;
+      border-radius:10px;
+      background:#fff;
+    }
+
+    .correct{
+      background:#6aaa64;
+      color:white;
+      border:none;
+    }
+
+    .present{
+      background:#c9b458;
+      color:white;
+      border:none;
+    }
+
+    .wrong{
+      background:#787c7e;
+      color:white;
+      border:none;
+    }
+
+    input{
+      padding:12px;
+      width:180px;
+      font-size:18px;
+      text-transform:uppercase;
+      border-radius:10px;
+      border:1px solid #ccc;
+      text-align:center;
+    }
+
+    button{
+      padding:12px 18px;
+      border:none;
+      background:#ff4d6d;
+      color:white;
+      border-radius:10px;
+      font-size:16px;
+      cursor:pointer;
+      margin-left:8px;
+    }
+
+    .message{
+      margin-top:20px;
+      font-size:18px;
+      color:#333;
+      font-weight:bold;
+    }
+
+    .romantic{
+      margin-top:15px;
+      color:#ff4d6d;
+      font-style:italic;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h2>Hey Sneha ❤️</h2>
+
+  <h1>❤️ Romantic Wordle</h1>
+
+  <div class="hint">
+    Hint: “What I lose whenever you smile” 😏
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div>
+    <input type="text" id="guessInput" maxlength="5" placeholder="Enter guess"/>
+    <button onclick="submitGuess()">Guess</button>
+  </div>
+
+  <div class="message" id="message"></div>
+
+  <div class="romantic" id="romantic"></div>
+
+</div>
+
+<script>
+  const secretWord = "HEART";
+  const maxAttempts = 6;
+  let attempts = 0;
+
+  const grid = document.getElementById("grid");
+
+  function createRow(guess){
+
+    for(let i=0;i<5;i++){
+
+      const tile = document.createElement("div");
+      tile.classList.add("tile");
+
+      const letter = guess[i];
+      tile.textContent = letter;
+
+      if(letter === secretWord[i]){
+        tile.classList.add("correct");
+      }
+      else if(secretWord.includes(letter)){
+        tile.classList.add("present");
+      }
+      else{
+        tile.classList.add("wrong");
+      }
+
+      grid.appendChild(tile);
+    }
+  }
+
+  function submitGuess(){
+
+    const input = document.getElementById("guessInput");
+    const guess = input.value.toUpperCase();
+
+    if(guess.length !== 5){
+      alert("Enter a 5-letter word ❤️");
+      return;
+    }
+
+    if(attempts >= maxAttempts){
+      return;
+    }
+
+    createRow(guess);
+
+    attempts++;
+
+    if(guess === secretWord){
+
+      document.getElementById("message").innerHTML =
+        "🎉 You guessed it!";
+
+      document.getElementById("romantic").innerHTML =
+        "Congrats Sneha ❤️ You found the word... and the thing you stole from me 😌";
+
+      input.disabled = true;
+    }
+
+    else if(attempts === maxAttempts){
+
+      document.getElementById("message").innerHTML =
+        "💔 Game Over!";
+
+      document.getElementById("romantic").innerHTML =
+        "The word was HEART ❤️";
+
+      input.disabled = true;
+    }
+
+    input.value = "";
+  }
+</script>
+
+</body>
+</html>
